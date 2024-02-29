@@ -1,11 +1,9 @@
 import { CommonModule, NgFor } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { POKEMON } from '../../mock-pokemon';
-/*import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';*/
 import { Pokemon } from '../../models/pokemon';
 import { PokemonDetailComponent } from '../pokemon-detail/pokemon-detail.component';
+import { PokemonService } from '../../services/pokemon.service';
 
 @Component({
   selector: 'pokemon',
@@ -14,21 +12,17 @@ import { PokemonDetailComponent } from '../pokemon-detail/pokemon-detail.compone
   templateUrl: './pokemon.component.html',
   styleUrl: './pokemon.component.css',
 })
-export class PokemonComponent {
-  pokemones: Pokemon[] = POKEMON;
+export class PokemonComponent implements OnInit{
+  pokemones: Pokemon[] = [];
   selectedPokemon?: Pokemon;
+
+  constructor(private pokemonService: PokemonService) {}
+
+  ngOnInit(): void {
+    this.pokemones = this.pokemonService.getPokemones();
+  }
 
   onSelect(pokemon: Pokemon): void {
     this.selectedPokemon = pokemon;
   }
 }
-
-/* export class PokeapiPokemon {
-  apiUrl = 'https://pokeapi.co/api/v2/';
-
-  constructor(private http: HttpClient) {}
-
-  getPokemon(id: number): Observable<any> {
-    return this.http.get('${apiUrl}/pokemon/${id}')
-  }
-}*/
