@@ -1,0 +1,9 @@
+<p>Pokemon-detail works!</p>
+<div *ngIf="pokemon">
+  <h2>{{ pokemon.name | uppercase }} Details</h2>
+  <div><span>id: </span>{{ pokemon.id }}</div>
+  <div>
+    <label for="hero-name">Hero name: </label>
+    <input id="hero-name" [(ngModel)]="pokemon.name" placeholder="name" />
+  </div>
+</div>
