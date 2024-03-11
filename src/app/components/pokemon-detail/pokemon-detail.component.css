@@ -1,0 +1,89 @@
+:host {
+  margin-inline: auto;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 1100px;
+  padding: 2rem;
+  background-color: white;
+  gap: 1rem;
+
+  header {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+
+    .botones {
+      display: flex;
+      justify-content: space-between;
+      gap: 1rem;
+      align-content: center;
+      width: 100%;
+    }
+  }
+
+  .principal {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-areas:
+      "imagen detalles"
+      "puntos detalles";
+    gap: 0.5rem;
+    padding: 1rem;
+
+    .imagen {
+      grid-area: imagen;
+      background-color: #f2f2f2;
+      border-radius: 5px;
+
+      img {
+        object-fit: contain;
+        width: 100%;
+        height: 100%;
+      }
+    }
+
+    .puntos {
+      background-color: rgb(138, 126, 126);
+      grid-area: puntos;
+      padding: 1rem;
+    }
+
+    .detalles {
+      /* background-color: magenta; */
+      grid-area: detalles;
+      font-size: 1.5rem;
+      padding: 1rem;
+
+      .caracteristicas {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-areas:
+          "altura categoria"
+          "peso habilidad"
+          "sexo .";
+
+        .altura {
+          grid-area: altura;
+        }
+
+        .peso {
+          grid-area: peso;
+        }
+
+        .sexo {
+          grid-area: sexo;
+        }
+
+        .categoria {
+          grid-area: categoria;
+        }
+
+        .habilidad {
+          grid-area: habilidad;
+        }
+      }
+    }
+  }
+}

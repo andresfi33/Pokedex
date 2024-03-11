@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { Pokemon } from '../../models/pokemon';
 import { PokemonDetailComponent } from '../pokemon-detail/pokemon-detail.component';
 import { PokemonService } from '../../services/pokemon.service';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'pokemon',
   standalone: true,
-  imports: [CommonModule, FormsModule, NgFor, PokemonDetailComponent],
+  imports: [CommonModule, FormsModule, NgFor, PokemonDetailComponent, RouterModule],
   templateUrl: './pokemon.component.html',
   styleUrl: './pokemon.component.css',
 })

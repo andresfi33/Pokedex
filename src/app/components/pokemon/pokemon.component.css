@@ -1,66 +1,33 @@
-/* HeroesComponent's private CSS styles */
 .pokemon {
-  margin: 0 0 2em 0;
-  list-style-type: none;
-  padding: 0;
-  width: 15em;
-}
-
-.pokemon li {
   display: flex;
-}
-
-.pokemon button {
-  flex: 1;
-  cursor: pointer;
-  position: relative;
-  left: 0;
-  background-color: #eee;
-  margin: 0.5em;
+  flex-wrap: wrap;
+  flex-direction: row;
+  justify-content: center;
+  gap: 0.5rem;
+  list-style: none;
+  margin: 0;
   padding: 0;
-  border-radius: 4px;
-  display: flex;
-  align-items: stretch;
-  height: 1.8em;
-}
 
-.pokemon button:hover {
-  color: #2c3a41;
-  background-color: #e6e6e6;
-  left: 0.1em;
-}
+  a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #1e1e1e;
+    border-radius: 4px;
+    padding: 1rem;
+    text-decoration: none;
+    color: #1e1e1e;
+    gap: 0.5rem;
+    transition: all 0.3s;
 
-.pokemon button:active {
-  background-color: #525252;
-  color: #fafafa;
-}
+    &:hover{
+      background-color: rgb(201, 219, 235);
+    }
 
-.pokemon button.selected {
-  background-color: black;
-  color: white;
-}
+    span{
+      font-weight: bold;
+    }
+  }
 
-.pokemon button.selected:hover {
-  background-color: #505050;
-  color: white;
-}
-
-.pokemon button.selected:active {
-  background-color: black;
-  color: white;
-}
-
-.pokemon .badge {
-  display: inline-block;
-  font-size: small;
-  color: white;
-  padding: 0.8em 0.7em 0 0.7em;
-  background-color: #405061;
-  line-height: 1em;
-  margin-right: 0.8em;
-  border-radius: 4px 0 0 4px;
-}
-
-.pokemon .name {
-  align-self: center;
+  
 }

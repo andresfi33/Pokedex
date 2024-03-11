@@ -1,9 +1,32 @@
-<p>Pokemon-detail works!</p>
-<div *ngIf="pokemon">
-  <h2>{{ pokemon.name | uppercase }} Details</h2>
-  <div><span>id: </span>{{ pokemon.id }}</div>
-  <div>
-    <label for="hero-name">Hero name: </label>
-    <input id="hero-name" [(ngModel)]="pokemon.name" placeholder="name" />
+<header>
+  <div class="botones">
+    <a routerLink="#">Anterior Pokemon</a>
+    <a routerLink="#">Siguiente Pokemon</a>
   </div>
+  <h2>{{ pokemon?.name }}</h2>
+</header>
+<div class="principal">
+  <div class="imagen">
+    <img [src]="pokemon?.sprites?.front_shiny" />
+  </div>
+  <div class="puntos">
+    <h3>Puntos de base</h3>
+    <p>PS: {{ getDatosArray(pokemon?.stats || [], 0) }}</p>
+    <p>Ataque: {{ getDatosArray(pokemon?.stats || [], 1) }}</p>
+    <p>Defensa: {{ getDatosArray(pokemon?.stats || [], 2) }}</p>
+    <p>Ataque Especial: {{ getDatosArray(pokemon?.stats || [], 3) }}</p>
+    <p>Defensa Especial: {{ getDatosArray(pokemon?.stats || [], 4) }}</p>
+    <p>Velocidad: {{ getDatosArray(pokemon?.stats || [], 5) }}</p>
+  </div>
+  <div class="detalles">
+    <p>{{ descripcion }}</p>
+    <div class="caracteristicas">
+        <div class="altura">Altura: {{pokemon?.height}}</div>
+        <div class="peso">Peso: {{pokemon?.weight}}</div>
+        <div class="sexo">Sexo: {{pokemon?.height}}</div>
+        <div class="categoria">Categoría: {{pokemon?.height}}</div>
+        <div class="habilidad">Habilidad: {{pokemon?.abilities}}</div>
+    </div>
+</div>
+  
 </div>
