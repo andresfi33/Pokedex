@@ -7,7 +7,7 @@
 </header>
 <div class="principal">
   <div class="imagen">
-    <img [src]="pokemon?.sprites?.front_shiny" />
+    <img [src]="pokemon?.sprites?.front_default" />
   </div>
   <div class="puntos">
     <h3>Puntos de base</h3>
@@ -21,12 +21,11 @@
   <div class="detalles">
     <p>{{ descripcion }}</p>
     <div class="caracteristicas">
-        <div class="altura">Altura: {{pokemon?.height}}</div>
-        <div class="peso">Peso: {{pokemon?.weight}}</div>
-        <div class="sexo">Sexo: {{pokemon?.height}}</div>
-        <div class="categoria">Categoría: {{pokemon?.height}}</div>
-        <div class="habilidad">Habilidad: {{pokemon?.abilities}}</div>
+      <div class="altura">Altura: {{ (pokemon?.height || 0) / 10 }} M</div>
+      <div class="peso">Peso: {{ (pokemon?.weight || 0) / 10 }} Kg</div>
+      <div class="sexo">Sexo: {{ pokemon?.height }}</div>
+      <div class="categoria">Categoría: {{ pokemon?.height }}</div>
+      <div class="habilidad">Habilidad: {{ pokemon?.abilities }}</div>
     </div>
-</div>
-  
+  </div>
 </div>

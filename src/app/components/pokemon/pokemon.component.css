@@ -1,33 +1,68 @@
-.pokemon {
+:host {
   display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  justify-content: center;
-  gap: 0.5rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 
-  a {
+  .pokemon {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    border: 1px solid #1e1e1e;
-    border-radius: 4px;
-    padding: 1rem;
-    text-decoration: none;
-    color: #1e1e1e;
-    gap: 0.5rem;
-    transition: all 0.3s;
+    flex-wrap: wrap;
+    flex-direction: row;
+    justify-content: center;
+    gap: 1.25rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 
-    &:hover{
-      background-color: rgb(201, 219, 235);
-    }
+    li {
+      background-color: white;
+      border: none;
+      border-radius: 8px;
+      box-shadow: 0 0 6px #1d1d1d;
 
-    span{
-      font-weight: bold;
+      a {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        border-radius: 4px;
+        padding: 1rem;
+        text-decoration: none;
+        color: #1e1e1e;
+        gap: 0.5rem;
+        transition: all 0.3s;
+
+        &:hover {
+          background-color: rgb(201, 219, 235);
+        }
+
+        span {
+          font-weight: bold;
+        }
+      }
     }
   }
 
-  
+  .botones {
+    display: flex;
+    gap: 0.5rem;
+
+    button{
+      outline: none;
+      border: 2px solid #1d1d1d;
+      border-radius: 24px;
+      background-color: white;
+      padding: 1rem 2rem;
+      cursor: pointer;
+      transition: all 0.3s;
+
+      &:hover:not(:disabled){
+        background-color: rgb(201, 219, 235);
+      }
+
+      &:disabled{
+        cursor:not-allowed;
+        border-color: grey;
+      }
+    }
+  }
 }

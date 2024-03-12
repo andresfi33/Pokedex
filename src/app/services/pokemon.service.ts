@@ -1,7 +1,14 @@
 import { Injectable } from '@angular/core';
 import { Pokemon } from '../models/pokemon';
-import {PokemonSpecies} from '../models/pokemon-species'
+import { PokemonSpecies } from '../models/pokemon-species';
 import { HttpClient } from '@angular/common/http';
+import { max } from 'rxjs';
+
+export interface DatosPokemon {
+  pokemon: Pokemon[];
+  hasNextPage: boolean;
+  hasPreviousPage: boolean;
+}
 
 @Injectable({
   providedIn: 'root',
@@ -9,37 +16,32 @@ import { HttpClient } from '@angular/common/http';
 export class PokemonService {
   private baseUrl = 'https://pokeapi.co/api/v2/';
 
+  private maxNumPokemon = 1025;
   private pokemon: Pokemon[] = [];
 
-  pokemonNames = [
-    'ditto',
-    'corsola',
-    'ribombee',
-    'kangaskhan',
-    'rhydon',
-    'pikachu',
-    'arceus',
-    'yveltal',
-    'bidoof',
-    'garbodor',
-  ];
+  private page: number = 1;
+  private numItemsPage: number = 25;
+
   constructor(private http: HttpClient) {}
 
-  getPokemones(): Pokemon[] {
-    if(this.pokemon.length > 0) return this.pokemon;
-    console.log('🧐 this.pokemon', this.pokemon);
-    
-    for (let i = 0; i < this.pokemonNames.length; i++) {
-      const nombre = this.pokemonNames[i];
-      this.http.get<Pokemon>(`${this.baseUrl}pokemon/${nombre}`).subscribe(
-        (response: Pokemon) => {
-          this.pokemon.push(response);
-        },
-        (e) => console.log(e)
-      );
+  async getPokemones(): Promise<DatosPokemon> {
+    this.pokemon = [];
+
+    const initialNumber = (this.page - 1) * this.numItemsPage + 1;
+    const maxNumber = this.numItemsPage * this.page + 1;
+
+    for (let i = initialNumber; i < maxNumber; i++) {
+      const response = await this.http
+        .get<Pokemon>(`${this.baseUrl}pokemon/${i}`)
+        .toPromise();
+
+      if (response) this.pokemon.push(response);
     }
 
-    return this.pokemon;
+    const hasPreviousPage = this.page > 1;
+    const hasNextPage = this.page <= (this.maxNumPokemon / this.numItemsPage) - 1;
+
+    return { pokemon: this.pokemon, hasPreviousPage, hasNextPage };
   }
 
   async getPokemonByName(nombre: string): Promise<Pokemon | undefined> {
@@ -55,8 +57,14 @@ export class PokemonService {
       .get<PokemonSpecies>(`${this.baseUrl}pokemon-species/${nombre}`)
       .toPromise();
 
-      const descripcion = response?.flavor_text_entries.find((entry: any) => entry.language.name === 'es');
+    const descripcion = response?.flavor_text_entries.find(
+      (entry: any) => entry.language.name === 'es'
+    );
 
-      return descripcion ? descripcion.flavor_text : 'Descripción no encontrada';
+    return descripcion ? descripcion.flavor_text : 'Descripción no encontrada';
+  }
+
+  async setPage(paginaSumar: number) {
+    this.page += paginaSumar;
   }
 }

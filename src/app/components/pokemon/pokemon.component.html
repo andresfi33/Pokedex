@@ -1,18 +1,14 @@
 <h2>My Pokemon</h2>
-<ul class="pokemon">
+<div class="botones">
+  <button (click)="goToPrev()" [disabled]="!hasPreviousPage">👈</button>
+  <button (click)="goToNext()" [disabled]="!hasNextPage">👉</button>
+</div>
+<ul class="pokemon" *ngIf="!loading">
   <li *ngFor="let pokemon of pokemones">
     <a routerLink="/{{ pokemon.name }}">
       <span>{{ pokemon.name }}</span>
-      <img [src]="pokemon.sprites.front_shiny">
+      <img [src]="pokemon.sprites.front_default" />
     </a>
-    <!-- <button
-      type="button"
-      [class.selected]="pokemon === selectedPokemon"
-      (click)="onSelect(pokemon)"
-    >
-      <span class="badge">{{ pokemon.id }}</span>
-      <span class="name">{{ pokemon.name }}</span>
-    </button> -->
   </li>
 </ul>
-<!-- <pokemon-detail [pokemon]="selectedPokemon"></pokemon-detail> -->
+<loading *ngIf="loading"></loading>
