@@ -37,6 +37,7 @@
 
         span {
           font-weight: bold;
+          text-transform: capitalize;
         }
       }
     }
@@ -44,6 +45,7 @@
 
   .botones {
     display: flex;
+    align-items: center;
     gap: 0.5rem;
 
     button{
@@ -63,6 +65,15 @@
         cursor:not-allowed;
         border-color: grey;
       }
+    }
+
+    span{
+      background-color: white;
+      height: fit-content;
+      border: 2px solid black;
+      border-radius: 4px;
+      font-weight: bold;
+      padding: 0.5rem;
     }
   }
 }

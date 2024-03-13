@@ -1,12 +1,13 @@
 <h2>My Pokemon</h2>
 <div class="botones">
   <button (click)="goToPrev()" [disabled]="!hasPreviousPage">👈</button>
+  <span>{{page}}</span>
   <button (click)="goToNext()" [disabled]="!hasNextPage">👉</button>
 </div>
 <ul class="pokemon" *ngIf="!loading">
   <li *ngFor="let pokemon of pokemones">
     <a routerLink="/{{ pokemon.name }}">
-      <span>{{ pokemon.name }}</span>
+      <span>{{ pokemon.name.replaceAll("-", " ") }}</span>
       <img [src]="pokemon.sprites.front_default" />
     </a>
   </li>

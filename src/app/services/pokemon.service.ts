@@ -8,6 +8,7 @@ export interface DatosPokemon {
   pokemon: Pokemon[];
   hasNextPage: boolean;
   hasPreviousPage: boolean;
+  page: number;
 }
 
 @Injectable({
@@ -41,7 +42,7 @@ export class PokemonService {
     const hasPreviousPage = this.page > 1;
     const hasNextPage = this.page <= (this.maxNumPokemon / this.numItemsPage) - 1;
 
-    return { pokemon: this.pokemon, hasPreviousPage, hasNextPage };
+    return { pokemon: this.pokemon, hasPreviousPage, hasNextPage, page: this.page };
   }
 
   async getPokemonByName(nombre: string): Promise<Pokemon | undefined> {

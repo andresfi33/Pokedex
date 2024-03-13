@@ -27,16 +27,18 @@ export class PokemonComponent implements OnInit {
   hasNextPage: boolean = false;
   hasPreviousPage: boolean = false;
   loading: boolean = false;
+  page: number = 1;
 
   constructor(private pokemonService: PokemonService) {}
 
   ngOnInit(): void {
     this.pokemonService
       .getPokemones()
-      .then(({ pokemon, hasNextPage, hasPreviousPage }) => {
+      .then(({ pokemon, hasNextPage, hasPreviousPage, page }) => {
         this.pokemones = pokemon;
         this.hasNextPage = hasNextPage;
         this.hasPreviousPage = hasPreviousPage;
+        this.page = page;
       });
   }
 
@@ -50,12 +52,13 @@ export class PokemonComponent implements OnInit {
     this.loading = true;
     //Recuperamos los datos de la página anterior
     this.pokemonService.setPage(-1);
-    const { pokemon, hasNextPage, hasPreviousPage } =
+    const { pokemon, hasNextPage, hasPreviousPage, page } =
       await this.pokemonService.getPokemones();
 
     this.pokemones = pokemon;
     this.hasNextPage = hasNextPage;
     this.hasPreviousPage = hasPreviousPage;
+    this.page = page;
     this.loading = false;
   }
 
@@ -65,12 +68,13 @@ export class PokemonComponent implements OnInit {
     this.loading = true;
     //Recuperamos los datos de la página siguiente
     this.pokemonService.setPage(1);
-    const { pokemon, hasNextPage, hasPreviousPage } =
+    const { pokemon, hasNextPage, hasPreviousPage, page } =
       await this.pokemonService.getPokemones();
 
     this.pokemones = pokemon;
     this.hasNextPage = hasNextPage;
     this.hasPreviousPage = hasPreviousPage;
+    this.page = page;
     this.loading = false;
   }
 }
