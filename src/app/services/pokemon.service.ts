@@ -53,6 +53,14 @@ export class PokemonService {
     return response;
   }
 
+  async getPokemonSpeciesByName(nombre: string): Promise<PokemonSpecies | undefined> {
+    const response = await this.http
+      .get<PokemonSpecies>(`${this.baseUrl}pokemon-species/${nombre}`)
+      .toPromise();
+
+    return response;
+  }
+
   async getDescripcion(nombre: string): Promise<string> {
     let response = await this.http
       .get<PokemonSpecies>(`${this.baseUrl}pokemon-species/${nombre}`)

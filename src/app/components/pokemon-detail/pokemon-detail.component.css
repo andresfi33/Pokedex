@@ -14,6 +14,10 @@
     gap: 1rem;
     align-items: center;
 
+    h2 {
+      text-transform: capitalize;
+    }
+
     .botones {
       display: flex;
       justify-content: space-between;
@@ -51,18 +55,31 @@
     }
 
     .detalles {
-      /* background-color: magenta; */
       grid-area: detalles;
-      font-size: 1.5rem;
-      padding: 1rem;
+
+      p {
+        font-size: 1.5rem;
+      }
+
+      .tipos{
+
+        span{
+          text-transform: capitalize;
+          /* background-color: pink; */
+          padding: 0.5rem 1rem;
+          margin: 0 0 0.5rem 0.5rem;
+        }
+      }
 
       .caracteristicas {
         display: grid;
         grid-template-columns: 1fr 1fr;
         grid-template-areas:
           "altura categoria"
-          "peso habilidad"
-          "sexo .";
+          "peso habilidad";
+        background-color: #269fdb;
+        padding: 1rem;
+        border-radius: 12px;
 
         .altura {
           grid-area: altura;
@@ -72,16 +89,20 @@
           grid-area: peso;
         }
 
-        .sexo {
-          grid-area: sexo;
-        }
-
         .categoria {
           grid-area: categoria;
         }
 
         .habilidad {
           grid-area: habilidad;
+        }
+
+        .clave {
+          color: white;
+        }
+
+        .valor{
+          font-size: 1.25rem;
         }
       }
     }
