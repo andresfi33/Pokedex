@@ -26,7 +26,7 @@ export class PokemonComponent implements OnInit {
   selectedPokemon?: Pokemon;
   hasNextPage: boolean = false;
   hasPreviousPage: boolean = false;
-  loading: boolean = false;
+  loading: boolean = true;
   page: number = 1;
 
   constructor(private pokemonService: PokemonService) {}
@@ -34,12 +34,14 @@ export class PokemonComponent implements OnInit {
   ngOnInit(): void {
     this.pokemonService
       .getPokemones()
-      .then(({ pokemon, hasNextPage, hasPreviousPage, page }) => {
+      .then(({ pokemon, hasNextPage, hasPreviousPage, page, loading }) => {
         this.pokemones = pokemon;
         this.hasNextPage = hasNextPage;
         this.hasPreviousPage = hasPreviousPage;
         this.page = page;
+        this.loading = loading;
       });
+      
   }
 
   onSelect(pokemon: Pokemon): void {
@@ -52,14 +54,14 @@ export class PokemonComponent implements OnInit {
     this.loading = true;
     //Recuperamos los datos de la página anterior
     this.pokemonService.setPage(-1);
-    const { pokemon, hasNextPage, hasPreviousPage, page } =
+    const { pokemon, hasNextPage, hasPreviousPage, page, loading } =
       await this.pokemonService.getPokemones();
 
     this.pokemones = pokemon;
     this.hasNextPage = hasNextPage;
     this.hasPreviousPage = hasPreviousPage;
     this.page = page;
-    this.loading = false;
+    this.loading = loading;
   }
 
   async goToNext() {

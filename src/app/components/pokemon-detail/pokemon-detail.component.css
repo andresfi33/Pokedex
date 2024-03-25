@@ -49,9 +49,10 @@
     }
 
     .puntos {
-      background-color: rgb(138, 126, 126);
+      background-color: rgb(168, 162, 162);
       grid-area: puntos;
       padding: 1rem;
+      border-radius: 12px;
     }
 
     .detalles {
@@ -61,13 +62,15 @@
         font-size: 1.5rem;
       }
 
-      .tipos{
+      .tipos {
+        div {
+          display: flex;
+          gap: 0.5rem;
 
-        span{
-          text-transform: capitalize;
-          /* background-color: pink; */
-          padding: 0.5rem 1rem;
-          margin: 0 0 0.5rem 0.5rem;
+          span {
+            text-transform: capitalize;
+            padding: 0.5rem 1rem;
+          }
         }
       }
 
@@ -101,7 +104,7 @@
           color: white;
         }
 
-        .valor{
+        .valor {
           font-size: 1.25rem;
         }
       }

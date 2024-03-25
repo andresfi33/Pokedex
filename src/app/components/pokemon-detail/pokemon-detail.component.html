@@ -1,8 +1,9 @@
 <ng-container *ngIf="pokemon">
   <header>
     <div class="botones">
-      <a routerLink="#">Anterior Pokemon</a>
-      <a routerLink="#">Siguiente Pokemon</a>
+      <button (click)="anteriorPokemon()">{{previousPokemon}}</button>
+      <button (click)="salir()">Salir</button>
+      <button (click)="siguientePokemon()">{{nextPokemon}}</button>
     </div>
     <h2>{{ pokemon.name.replaceAll("-", " ") }}</h2>
   </header>
@@ -11,13 +12,37 @@
       <img [src]="getFrontImage(pokemon)" />
     </div>
     <div class="puntos">
-      <h3>Puntos de base</h3>
+      <h3>Stats</h3>
       <p>PS: {{ getDatosArray(pokemon.stats || [], 0) }}</p>
+      <progress
+        max="255"
+        [value]="getDatosArray(pokemon.stats || [], 0)"
+      ></progress>
       <p>Ataque: {{ getDatosArray(pokemon.stats || [], 1) }}</p>
+      <progress
+        max="190"
+        [value]="getDatosArray(pokemon.stats || [], 1)"
+      ></progress>
       <p>Defensa: {{ getDatosArray(pokemon.stats || [], 2) }}</p>
+      <progress
+        max="250"
+        [value]="getDatosArray(pokemon.stats || [], 2)"
+      ></progress>
       <p>Ataque Especial: {{ getDatosArray(pokemon.stats || [], 3) }}</p>
+      <progress
+        max="194"
+        [value]="getDatosArray(pokemon.stats || [], 3)"
+      ></progress>
       <p>Defensa Especial: {{ getDatosArray(pokemon.stats || [], 4) }}</p>
+      <progress
+        max="250"
+        [value]="getDatosArray(pokemon.stats || [], 4)"
+      ></progress>
       <p>Velocidad: {{ getDatosArray(pokemon.stats || [], 5) }}</p>
+      <progress
+        max="180"
+        [value]="getDatosArray(pokemon.stats || [], 5)"
+      ></progress>
     </div>
     <div class="detalles">
       <p>{{ descripcion }}</p>
@@ -32,7 +57,9 @@
         </div>
         <div class="categoria">
           <span class="clave">Categoría: </span>
-          <span class="valor">{{ getCategoria()?.replaceAll("Pokémon ", "") }}</span>
+          <span class="valor">{{
+            getCategoria()?.replaceAll("Pokémon ", "")
+          }}</span>
         </div>
         <div class="habilidad">
           <span class="clave">Habilidad: </span>
@@ -41,7 +68,13 @@
       </div>
       <div class="tipos">
         <p>Tipo</p>
-        <span *ngFor="let tipo of tipos" [style.background-color]="getColor(tipo)">{{ tipo }}</span>
+        <div>
+          <span
+            *ngFor="let tipo of tipos"
+            class="bg-type bg-color-{{ tipo }}"
+            >{{ tipo }}</span
+          >
+        </div>
       </div>
     </div>
   </div>

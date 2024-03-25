@@ -15,7 +15,7 @@ import {
 } from '../../models/pokemon';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { PokemonService } from '../../services/pokemon.service';
 import { RouterModule } from '@angular/router';
 import { PokemonSpecies } from '../../models/pokemon-species';
@@ -30,25 +30,69 @@ import { PokemonSpecies } from '../../models/pokemon-species';
 export class PokemonDetailComponent {
   // @Input() pokemon?: Pokemon;}
   pokemon?: Pokemon;
+  nextPokemon?: string;
+  previousPokemon?: string;
   pokemonSpecies?: PokemonSpecies;
   descripcion: string = '';
   tipos: string[] = [];
 
   constructor(
     private route: ActivatedRoute,
+    private router: Router,
     private pokemonService: PokemonService
   ) {}
 
   ngOnInit(): void {
-    this.getPokemon();
-    this.getPokemonSpecies();
-    this.getDescipcion();
+    // subscribe to url changes
+    this.route.params.subscribe(() => {
+      this.getPokemon();
+      this.getPokemonSpecies();
+      this.getDescipcion();
+    });
   }
 
   async getPokemon(): Promise<void> {
     const nombre = this.route.snapshot.paramMap.get('nombre');
     this.pokemon = await this.pokemonService.getPokemonByName(nombre || '');
     await this.getTipos();
+    await this.getAnteriorPokemon();
+    await this.getSiguientePokemon();
+  }
+
+  async salir(): Promise<void> {
+      this.router.navigateByUrl(`/`);
+  }
+
+  async anteriorPokemon(): Promise<void> {
+    if (this.pokemon!.id > 1) {
+      const siguientePokemon = await this.getPokemonName(this.pokemon!.id - 1);
+      this.router.navigateByUrl(`/${siguientePokemon}`);
+    }
+  }
+
+  async siguientePokemon(): Promise<void> {
+    const siguientePokemon = await this.getPokemonName(this.pokemon!.id + 1);
+    this.router.navigateByUrl(`/${siguientePokemon}`);
+  }
+
+  async getAnteriorPokemon(): Promise<void> {
+    if (this.pokemon!.id > 1) {
+      this.previousPokemon = await this.getPokemonName(this.pokemon!.id - 1);
+    } else{
+      this.previousPokemon = '🌚';
+    }
+  }
+
+  async getSiguientePokemon(): Promise<void> {
+      this.nextPokemon = await this.getPokemonName(this.pokemon!.id + 1);
+  }
+
+  async getPokemonName(id: number): Promise<string> {
+    const nuevoPokemon = await this.pokemonService.getPokemonByName(
+      id.toString() || ''
+    );
+
+    return nuevoPokemon!.name;
   }
 
   async getPokemonSpecies(): Promise<void> {
@@ -84,8 +128,6 @@ export class PokemonDetailComponent {
     const tiposPokemon = this.pokemon?.types.map((tipo) => {
       return tipo.type.name;
     });
-
-    console.log(tiposPokemon);
 
     this.tipos = tiposPokemon || [];
   }
@@ -131,72 +173,5 @@ export class PokemonDetailComponent {
     }
 
     return '';
-  }
-
-  getColor(tipo: string): string {
-    let color = '';
-    console.log(tipo);
-
-    switch (tipo) {
-      case 'steel':
-        color = '#6C8582';
-        break;
-      case 'water':
-        color = '#4C55E7';
-        break;
-      case 'bug':
-        color = '#4FE556';
-        break;
-      case 'dragon':
-        color = '#4F38C4';
-        break;
-      case 'electric':
-        color = '#F2F237';
-        break;
-      case 'ghost':
-        color = '#5716A4';
-        break;
-      case 'fire':
-        color = '#EC3425';
-        break;
-      case 'fairy':
-        color = '#F355DD';
-        break;
-      case 'ice':
-        color = '#55ECF3';
-        break;
-      case 'fight':
-        color = '#F48B05';
-        break;
-      case 'normal':
-        color = '#D5B2AB';
-        break;
-      case 'grass':
-        color = '#44A005';
-        break;
-      case 'psychic':
-        color = '#F85C9E';
-        break;
-      case 'rock':
-        color = '#C6AD87';
-        break;
-      case 'dark':
-        color = '#31302E';
-        break;
-      case 'ground':
-        color = '#8B5708';
-        break;
-      case 'poison':
-        color = '#B61CD2';
-        break;
-      case 'flying':
-        color = '#86D0F2';
-        break;
-      default:
-        color = '#D5B2AB';
-        break;
-    }
-
-    return color;
   }
 }

@@ -9,6 +9,7 @@ export interface DatosPokemon {
   hasNextPage: boolean;
   hasPreviousPage: boolean;
   page: number;
+  loading: boolean;
 }
 
 @Injectable({
@@ -41,13 +42,22 @@ export class PokemonService {
 
     const hasPreviousPage = this.page > 1;
     const hasNextPage = this.page <= (this.maxNumPokemon / this.numItemsPage) - 1;
+    const loading = false;
 
-    return { pokemon: this.pokemon, hasPreviousPage, hasNextPage, page: this.page };
+    return { pokemon: this.pokemon, hasPreviousPage, hasNextPage, page: this.page, loading };
   }
 
   async getPokemonByName(nombre: string): Promise<Pokemon | undefined> {
     const response = await this.http
       .get<Pokemon>(`${this.baseUrl}pokemon/${nombre}`)
+      .toPromise();
+
+    return response;
+  }
+
+  async getPokemonById(id: string): Promise<Pokemon | undefined> {
+    const response = await this.http
+      .get<Pokemon>(`${this.baseUrl}pokemon/${id}`)
       .toPromise();
 
     return response;
